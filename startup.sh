@@ -20,57 +20,38 @@ fi
 SwatGUIState=$HOME/swat4/$CONTENT_PATH/System/SwatGUIState.ini
 DedicatedServerIni=$HOME/swat4/$CONTENT_PATH/System/$SERVER_BINARY.ini
 
-# Server GameMode
-if [ "$GAME_TYPE" == "Barricaded Suspects" ]; then
-	sed -i "s/GameType=.*$/GameType=MPM_BarricadedSuspects/g" $SwatGUIState
-elif [ "$GAME_TYPE" == "VIP Escort" ]; then
-	sed -i "s/GameType=.*$/GameType=MPM_VIPEscort/g" $SwatGUIState
-elif [ "$GAME_TYPE" == "Rapid Deployment" ]; then
-	sed -i "s/GameType=.*$/GameType=MPM_RapidDeployment/g" $SwatGUIState
-elif [ "$GAME_TYPE" == "CO-OP" ]; then
-	sed -i "s/GameType=.*$/GameType=MPM_COOP/g" $SwatGUIState
-else [ "$GAME_TYPE" == "Smash And Grab (The Stetchkov Syndicate only)" ];
-	sed -i "s/GameType=.*$/GameType=MPM_SmashAndGrab/g" $SwatGUIState
-fi
+case $GAME_TYPE in
+	"Barricade Suspects")
+		sed -i "s/GameType=.*$/GameType=MPM_BarricadedSuspects/g" $SwatGUIState
+    	;;
+    "VIP Escort")
+    	sed -i "s/GameType=.*$/GameType=MPM_VIPEscort/g" $SwatGUIState
+        ;;
+    "Rapid Deployment")
+    	sed -i "s/GameType=.*$/GameType=MPM_RapidDeployment/g" $SwatGUIState
+        ;;
+    "CO-OP")
+    	sed -i "s/GameType=.*$/GameType=MPM_COOP/g" $SwatGUIState
+        ;;
+    "Smash And Grab (The Stetchkov Syndicate only)")
+    	sed -i "s/GameType=.*$/GameType=MPM_SmashAndGrab/g" $SwatGUIState
+        ;;
+esac
 
-: <<'REMOVEME'
-# This is so stupid
-if [ "$CONTENT_VERSION" == "SWAT 4" ]; then
-    # We need to change MapIndex= in SwatGUIState.ini for SWAT 4 as it does not allow loading maps from startup parameters
-    # This is going to cause a lot of problems and needs thorough testing
-    echo "User is playing SWAT 4, finding MapIndex!"
-    echo "Current map is: $SERVER_MAP"
-    #sed -i "s/\b[$GAME_TYPE]\b=.*$/MapIndex=$MAP_INDEX/g" $SwatGUIState
-    #sed -i "s/\bMapIndex\b=.*$/MapIndex=$MAP_INDEX/g" $SwatGUIState
-fi
-REMOVEME
-
-sed -i "s/\bAdminPassword\b=.*$/AdminPassword=$ADMIN_PASSWORD/g" $SwatGUIState
-sed -i "s/ServerName=.*$/ServerName=$SERVER_NAME/g" $SwatGUIState
-sed -i "s/MaxPlayers=.*$/MaxPlayers=$MAX_PLAYERS/g" $SwatGUIState
-sed -i "s/\bPassword\b=.*$/Password=$SERVER_PASSWORD/g" $SwatGUIState
-sed -i "s/NumRounds=.*$/NumRounds=$NUM_ROUNDS/g" $SwatGUIState
-sed -i "s/DeathLimit=.*$/DeathLimit=$DEATH_LIMIT/g" $SwatGUIState
-sed -i "s/RoundTimeLimit=.*$/RoundTimeLimit=$ROUND_TIME_LIMIT/g" $SwatGUIState
-sed -i "s/PostGameTimeLimit=.*$/PostGameTimeLimit=$POST_GAME_TIME_LIMIT/g" $SwatGUIState
-sed -i "s/MPMissionReadyTime=.*$/MPMissionReadyTime=$MP_MISSION_READY_TIME/g" $SwatGUIState
-
-if [ "$DESIRED_MP_ENTRY_POINT" == "Primary" ]; then
-	sed -i "s/DesiredMPEntryPoint=.*$/DesiredMPEntryPoint=ET_Primary/g" $SwatGUIState
-else
-	sed -i "s/DesiredMPEntryPoint=.*$/DesiredMPEntryPoint=ET_Secondary/g" $SwatGUIState
-fi
+sed -i -e "s/\bAdminPassword\b=.*$/AdminPassword=$ADMIN_PASSWORD/g;
+s/ServerName=.*$/ServerName=$SERVER_NAME/g;
+s/MaxPlayers=.*$/MaxPlayers=$MAX_PLAYERS/g;
+s/\bPassword\b=.*$/Password=$SERVER_PASSWORD/g;
+s/NumRounds=.*$/NumRounds=$NUM_ROUNDS/g;
+s/DeathLimit=.*$/DeathLimit=$DEATH_LIMIT/g;
+s/RoundTimeLimit=.*$/RoundTimeLimit=$ROUND_TIME_LIMIT/g;
+s/PostGameTimeLimit=.*$/PostGameTimeLimit=$POST_GAME_TIME_LIMIT/g;
+s/MPMissionReadyTime=.*$/MPMissionReadyTime=$MP_MISSION_READY_TIME/g" $SwatGUIState
 
 if [ ! -z "$SERVER_PASSWORD" ]; then
 	sed -i 's/bPassworded=.*$/bPassworded=True/g' $SwatGUIState
 else
 	sed -i 's/bPassworded=.*$/bPassworded=False/g' $SwatGUIState
-fi
-
-if [ $LAN_SERVER -eq 0 ]; then
-	sed -i 's/bLAN=.*$/\bLAN=False/g' $SwatGUIState
-else
-	sed -i 's/bLAN=.*$/\bLAN=True/g' $SwatGUIState
 fi
 
 if [ $ALLOW_DOWNLOADS -eq 1 ]; then
