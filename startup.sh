@@ -1,21 +1,19 @@
 #!/bin/bash
-# Test script for SWAT4 Server
-# Findings:
-# SWAT 4 does not respect the mapname in the startup parameter. TSS will respect it.
-# As a result, SWAT 4 will load the first map (Maps[0]) under the chosen GameMode from SwatGUIState.ini
-# If MapIndex= in SwatGUIState.ini is set, it will load the map assigned to that index
+## File: Pterodactyl SWAT 4 Egg - startup.sh
+## Author: MrCalvin <admin@sbotnas.io>
+## Date: 2023/7/02
+## License: MIT License
 
-# ?GamePassword= is respected in SWAT 4 startup parameters. It is not respected in TSS.
-# Game Passwords are NOT checked if bPassworded=False, even if you have Password= set
-# Therefore, in order to password protect a server, you must set the Password variable AND bPassworded to True
-
-if [ "$CONTENT_VERSION" == "SWAT 4" ]; then
-	CONTENT_PATH=Content
-    SERVER_BINARY=Swat4DedicatedServer
-else
-	CONTENT_PATH=ContentExpansion
-    SERVER_BINARY=Swat4XDedicatedServer
-fi
+case $CONTENT_VERSION in
+	"SWAT 4")
+    	CONTENT_PATH=Content
+    	SERVER_BINARY=Swat4DedicatedServer
+		;;
+    "The Stetchkov Syndicate")
+		CONTENT_PATH=ContentExpansion
+    	SERVER_BINARY=Swat4XDedicatedServer
+		;;
+esac
 
 SwatGUIState=$HOME/swat4/$CONTENT_PATH/System/SwatGUIState.ini
 DedicatedServerIni=$HOME/swat4/$CONTENT_PATH/System/$SERVER_BINARY.ini
@@ -54,10 +52,10 @@ else
 	sed -i 's/bPassworded=.*$/bPassworded=False/g' $SwatGUIState
 fi
 
-if [ $ALLOW_DOWNLOADS -eq 1 ]; then
-	sed -i "s/AllowDownloads=.*$/AllowDownloads=True/g" $DedicatedServerIni
-else
-	sed -i "s/AllowDownloads=.*$/AllowDownloads=False/g" $DedicatedServerIni
+# Hacky map fix for SWAT 4
+if [ "$CONTENT_VERSION" == "SWAT 4" ]; then
+    sed -i -e "s/MapIndex=.*$/MapIndex=0/g;
+	s/Maps\[0\]=.*$/Maps\[0\]=$SERVER_MAP/g" $SwatGUIState
 fi
 
 cd ~/swat4/$CONTENT_PATH/System/
