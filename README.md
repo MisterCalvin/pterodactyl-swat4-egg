@@ -1,2 +1,2 @@
 # Swat4-Pterodoactyl
-Default configs for SWAT4 Dedicated Server
+WIP Pterodactyl egg for running SWAT 4 under Wine
