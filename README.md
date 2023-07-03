@@ -31,4 +31,4 @@ SWAT requires Base Port + 3 (Default port is 10480, so 10480-10483/udp)
 
 - I have tested this as thoroughly as possible, however SWAT 4 has many bugs in its dedicated server software so I am sure there are some things I have not caught. If encounter any problems feel free to [create a new issue](https://github.com/MisterCalvin/pterodactyl-swat4-egg/issues).
 
-- Tested with Pterodactyl Panel Version ``1.11.13`` and Wings Version ``1.11.6``
+- Tested with Pterodactyl Panel Version ``1.11.13``, Wings Version ``1.11.6``
