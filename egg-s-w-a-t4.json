@@ -1,0 +1,172 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+    "meta": {
+        "version": "PTDL_v2",
+        "update_url": null
+    },
+    "exported_at": "2023-07-02T23:19:38-04:00",
+    "name": "SWAT 4",
+    "author": "admin@sbotnas.io",
+    "description": "SWAT 4 is a tactical shooter video game where you lead an elite squad of police tactical experts and are tasked to bring order to a series of highly volatile scenarios involving hostages, civilians, suspects and other law enforcement officers. The rules of engagement are strict.",
+    "features": null,
+    "docker_images": {
+        "ghcr.io\/parkervcp\/yolks:wine_latest": "ghcr.io\/parkervcp\/yolks:wine_latest"
+    },
+    "file_denylist": [],
+    "startup": ".\/startup.sh",
+    "config": {
+        "files": "{}",
+        "startup": "{\r\n    \"done\": \"\"\r\n}",
+        "logs": "{}",
+        "stop": "^^C"
+    },
+    "scripts": {
+        "installation": {
+            "script": "#!\/bin\/bash\r\n## File: Pterodactyl SWAT 4 - egg-s-w-a-t4.json\r\n## Author: MrCalvin <admin@sbotnas.io>\r\n## Date: 2023\/7\/02\r\n## License: MIT License\r\n## Image to install with is 'ghcr.io\/parkervcp\/installers:debian'\r\n\r\nexport HOME=\/mnt\/server\r\nexport SWAT4_CONTENT_PATH=$HOME\/swat4\/Content\/System\r\nexport SWAT4X_CONTENT_PATH=$HOME\/swat4\/ContentExpansion\/System\r\n\r\n# Updated Server Browser Patch\r\nexport SWAT4_SERVER_PATCH=https:\/\/raw.githubusercontent.com\/sergeii\/swat-patches\/master\/swat4stats-masterserver\/1.1\/Engine.dll\r\nexport SWAT4X_SERVER_PATCH=https:\/\/raw.githubusercontent.com\/sergeii\/swat-patches\/master\/swat4stats-masterserver\/TSS\/Engine.dll\r\n\r\n# Default Server Configs\r\n# SWAT 4\r\nexport SWAT4GUISTATE_INI=https:\/\/github.com\/MisterCalvin\/pterodactyl-swat4-egg\/raw\/main\/Content\/System\/SwatGUIState.ini\r\nexport SWAT4DEDICATEDSERVER_INI=https:\/\/github.com\/MisterCalvin\/pterodactyl-swat4-egg\/raw\/main\/Content\/System\/Swat4DedicatedServer.ini\r\n\r\n# TSS\r\nexport SWAT4XGUISTATE_INI=https:\/\/github.com\/MisterCalvin\/pterodactyl-swat4-egg\/raw\/main\/ContentExpansion\/System\/SwatGUIState.ini\r\nexport SWAT4XDEDICATEDSERVER_INI=https:\/\/github.com\/MisterCalvin\/pterodactyl-swat4-egg\/raw\/main\/ContentExpansion\/System\/Swat4XDedicatedServer.ini\r\n\r\nRED='\\033[0;31m'\r\nGREEN='\\033[0;32m'\r\nYELLOW='\\033[1;33m'\r\nBLUE='\\033[0;34m'\r\nNC='\\033[0m'\r\n\r\napt update -y\r\napt install -y file unzip wget\r\n\r\nif [ ! -d $HOME ]; then\r\n    mkdir -p $HOME\r\nfi\r\n\r\nif [ ! -d \"$HOME\/swat4\" ]; then\r\n    mkdir swat4\r\nfi\r\n\r\ncd $HOME\r\n\r\nif wget -q -nc --show-progress --progress=bar:force:noscroll -O ${DOWNLOAD_LINK##*\/} --user-agent=Mozilla --content-disposition -E -c \"${DOWNLOAD_LINK}\"; then\r\n    echo -e \"${GREEN}Successfully downloaded SWAT 4 Game Files${NC}\"\r\nelse\r\n    echo -e \"${RED}Something went wrong, can't download SWAT 4 game files, exiting.${NC}\"\r\n    exit 1\r\nfi\r\n\r\n# Unpack game files\r\nFILETYPE=$(file -F ',' ${DOWNLOAD_LINK##*\/} | cut -d',' -f2 | cut -d' ' -f2)\r\n\r\nif [ \"$FILETYPE\" == \"gzip\" ]; then\r\n    tar xzvf ${DOWNLOAD_LINK##*\/} -C $HOME\/swat4\r\nelif [ \"$FILETYPE\" == \"Zip\" ]; then\r\n    unzip ${DOWNLOAD_LINK##*\/} -d $HOME\/swat4\r\nelif [ \"$FILETYPE\" == \"XZ\" ]; then\r\n    tar xvf ${DOWNLOAD_LINK##*\/} -C $HOME\/swat4\r\nelse\r\n    echo -e \"unknown filetype. Exiting\"\r\n    exit 2 \r\nfi\r\n\r\nrm -rf ${DOWNLOAD_LINK##*\/}\r\n\r\n# Backup old Server Browser DLL's\r\nmv $SWAT4_CONTENT_PATH\/Engine.dll $SWAT4_CONTENT_PATH\/Engine.dll.bak\r\nmv $SWAT4X_CONTENT_PATH\/Engine.dll $SWAT4X_CONTENT_PATH\/Engine.dll.bak\r\n\r\n# Download patched Server Browser DLL's\r\nif wget -q --show-progress --progress=bar:force:noscroll -P $SWAT4_CONTENT_PATH\/  --user-agent=Mozilla --content-disposition -E -c \"${SWAT4_SERVER_PATCH}\" ; then\r\n    echo -e \"${GREEN}Successfully downloaded SWAT 4 Engine.dll${NC}\"\r\nelse\r\n    echo -e \"${RED}Something went wrong, can't download SWAT 4 Engine.dll, exiting.${NC}\"\r\n    exit 1\r\nfi\r\n\r\nif wget -q --show-progress --progress=bar:force:noscroll -P $SWAT4X_CONTENT_PATH\/ --user-agent=Mozilla --content-disposition -E -c \"${SWAT4X_SERVER_PATCH}\" ; then\r\n    echo -e \"${GREEN}Successfully downloaded SWAT4X Engine.dll${NC}\"\r\nelse\r\n    echo -e \"${RED}Something went wrong, can't download SWAT 4X Engine.dll, exiting.${NC}\"\r\n    exit 1\r\nfi\r\n\r\n# For some reason the script will not overwrite the default files, so this is a temporary fix\r\nrm $SWAT4_CONTENT_PATH\/SwatGUIState.ini\r\nrm $SWAT4X_CONTENT_PATH\/SwatGUIState.ini\r\n\r\n# Download Default Server Configs\r\nif wget -q --show-progress --progress=bar:force:noscroll $SWAT4GUISTATE_INI --user-agent=Mozilla --content-disposition -E -c -O $SWAT4_CONTENT_PATH\/SwatGUIState.ini; then\r\n    echo -e \"${GREEN}Successfully downloaded \/home\/container\/Content\/System\/SwatGUIState.ini${NC}\"\r\nelse\r\n    echo -e \"${RED}Something went wrong, can't download \/home\/container\/Content\/System\/SwatGUIState.ini, exiting.${NC}\"\r\n    exit 1\r\nfi\r\n\r\nif wget -q --show-progress --progress=bar:force:noscroll $SWAT4DEDICATEDSERVER_INI --user-agent=Mozilla --content-disposition -E -c -O $SWAT4_CONTENT_PATH\/Swat4DedicatedServer.ini; then\r\n    echo -e \"${GREEN}Successfully downloaded \/home\/container\/Content\/System\/Swat4DedicatedServer.ini${NC}\"\r\nelse\r\n    echo -e \"${RED}Something went wrong, can't download \/home\/container\/Content\/System\/Swat4DedicatedServer.ini, exiting.${NC}\"\r\n    exit 1\r\nfi\r\n\r\nif wget -q --show-progress --progress=bar:force:noscroll $SWAT4XGUISTATE_INI --user-agent=Mozilla --content-disposition -E -c -O $SWAT4X_CONTENT_PATH\/SwatGUIState.ini; then\r\n    echo -e \"${GREEN}Successfully downloaded \/home\/container\/ContentExpansion\/System\/SwatGUIState.ini${NC}\"\r\nelse\r\n    echo -e \"${RED}Something went wrong, can't download \/home\/container\/ContentExpansion\/System\/SwatGUIState.ini, exiting.${NC}\"\r\n    exit 1\r\nfi\r\n\r\nif wget -q --show-progress --progress=bar:force:noscroll $SWAT4XDEDICATEDSERVER_INI --user-agent=Mozilla --content-disposition -E -c -O $SWAT4X_CONTENT_PATH\/Swat4XDedicatedServer.ini; then\r\n    echo -e \"${GREEN}Successfully downloaded \/home\/container\/ContentExpansion\/System\/Swat4XDedicatedServer.ini${NC}\"\r\nelse\r\n    echo -e \"${RED}Something went wrong, can't download \/home\/container\/ContentExpansion\/System\/Swat4XDedicatedServer.ini, exiting.${NC}\"\r\n    exit 1\r\nfi\r\n\r\n# Download startup script\r\nif wget -q --show-progress --progress=bar:force:noscroll https:\/\/github.com\/MisterCalvin\/pterodactyl-swat4-egg\/raw\/main\/startup.sh --user-agent=Mozilla --content-disposition -E -c -O $HOME\/startup.sh; then\r\n    echo -e \"${GREEN}Successfully downloaded startup.sh${NC}\"\r\nelse\r\n    echo -e \"${RED}Something went wrong, can't download startup script, exiting.${NC}\"\r\n    exit 1\r\nfi\r\n\r\nchmod +x $HOME\/startup.sh\r\nrm $HOME\/.wget-hsts\r\n\r\necho -e \"${BLUE}-----------------------${NC}\"\r\necho -e \"${GREEN}Installation completed${NC}\"\r\necho -e \"${BLUE}-----------------------${NC}\"",
+            "container": "ghcr.io\/parkervcp\/installers:debian",
+            "entrypoint": "bash"
+        }
+    },
+    "variables": [
+        {
+            "name": "Server Download URL",
+            "description": "URL to download the game files. zip, gzip, or tar.xz files only - all others will fail to unpack!",
+            "env_variable": "DOWNLOAD_LINK",
+            "default_value": "",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string",
+            "field_type": "text"
+        },
+        {
+            "name": "Game Version",
+            "description": "Choose between SWAT 4 or its expansion, The Stetchkov Syndicate",
+            "env_variable": "CONTENT_VERSION",
+            "default_value": "SWAT 4",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|in:SWAT 4,The Stetchkov Syndicate",
+            "field_type": "text"
+        },
+        {
+            "name": "Server Name",
+            "description": "Name of the Server",
+            "env_variable": "SERVER_NAME",
+            "default_value": "A Pterodactyl Swat 4 Server",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:60",
+            "field_type": "text"
+        },
+        {
+            "name": "Server Password",
+            "description": "Password for the Server",
+            "env_variable": "SERVER_PASSWORD",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "nullable|alpha_num|max:32",
+            "field_type": "text"
+        },
+        {
+            "name": "Game Type",
+            "description": "Game type to run",
+            "env_variable": "GAME_TYPE",
+            "default_value": "CO-OP",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|in:Barricaded Suspects,VIP Escort,Rapid Deployment,Smash And Grab (The Stetchkov Syndicate only),CO-OP",
+            "field_type": "text"
+        },
+        {
+            "name": "Map",
+            "description": "Level to load",
+            "env_variable": "SERVER_MAP",
+            "default_value": "SP-FairfaxResidence",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string",
+            "field_type": "text"
+        },
+        {
+            "name": "Max Players",
+            "description": "Maximum amount of players for the server",
+            "env_variable": "MAX_PLAYERS",
+            "default_value": "10",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|integer|gt:0|max:10",
+            "field_type": "text"
+        },
+        {
+            "name": "Admin Password",
+            "description": "Admin password for in-game administration",
+            "env_variable": "ADMIN_PASSWORD",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "nullable|alpha_num|max:32",
+            "field_type": "text"
+        },
+        {
+            "name": "Number of Rounds",
+            "description": "Number of rounds for each match",
+            "env_variable": "NUM_ROUNDS",
+            "default_value": "15",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|integer|between:1,100",
+            "field_type": "text"
+        },
+        {
+            "name": "Round Time Limit",
+            "description": "Time limit (in seconds) for each round (0 = No Time Limit)",
+            "env_variable": "ROUND_TIME_LIMIT",
+            "default_value": "900",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|integer|between:0,86400",
+            "field_type": "text"
+        },
+        {
+            "name": "Death Limit",
+            "description": "How many deaths are required to lose a round (0 = No Death Limit)",
+            "env_variable": "DEATH_LIMIT",
+            "default_value": "50",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|integer|between:0,3600",
+            "field_type": "text"
+        },
+        {
+            "name": "Ready Time Limit",
+            "description": "Time (in seconds) for players to ready themselves in between rounds in a MP game",
+            "env_variable": "MP_MISSION_READY_TIME",
+            "default_value": "90",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|integer|between:0,3600",
+            "field_type": "text"
+        },
+        {
+            "name": "Post Game Time Limit",
+            "description": "Time (in seconds) between the end of the round and server loading the next level",
+            "env_variable": "POST_GAME_TIME_LIMIT",
+            "default_value": "15",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|integer|between:0,3600",
+            "field_type": "text"
+        },
+        {
+            "name": "WINEDEBUG",
+            "description": "",
+            "env_variable": "WINEDEBUG",
+            "default_value": "-all",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string|max:20",
+            "field_type": "text"
+        }
+    ]
+}
