@@ -59,4 +59,4 @@ if [ "$CONTENT_VERSION" == "SWAT 4" ]; then
 fi
 
 cd ~/swat4/$CONTENT_PATH/System/
-wine $SERVER_BINARY.exe "$SERVER_MAP?Port=$SERVER_PORT" && sleep 5 & tail -F $SERVER_BINARY.log
+wine $SERVER_BINARY.exe "$SERVER_MAP?Port=$SERVER_PORT" & tail -F $SERVER_BINARY.log
