@@ -1,12 +1,12 @@
 # Pterodactyl SWAT 4 Egg
-This is a Pterodactyl egg for SWAT 4 Gold Edition, or the GOG version, running under Wine. It also supports its expansion, The Stetchkov Syndicate. The installer assumes you have either of these versions and may fail if you try to provide it any other versions. You will need to provide a URL to an archived copy of game files during setup. Currently, the supported archive filetypes are: ``.zip``, ``.gzip``, and ``.tar.xz``. If you have an exe of the game you will need to install it on another computer and archive the contents before uploading them. You must have the files in the root directory of your archive or the installer will fail. The installer expects the archive layout to be as such:
+This is a Pterodactyl egg for SWAT 4 Gold Edition, or the GOG version, running under Wine. It also supports its expansion, The Stetchkov Syndicate. The installer assumes you have either of these versions and may fail if you try to provide it any other versions. You will need to provide a URL to an archived copy of the game files during the egg setup. Currently, the supported archive filetypes are: ``.zip``, ``.gzip``, and ``.tar.xz``. If you have an exe of the game you will need to install it on another computer and archive the contents before uploading them. You must have the files in the root directory of your archive or the installer will fail. The installer expects the archive layout to be as such:
 
     .
     ├── ...
     ├── Content
     └── ContentExpansion
 
-The installer will automatically download and install the Master Server Patch necessary for listing your game on the community server list. You can find the project page [here](https://github.com/sergeii/swat-patches/tree/master/swat4stats-masterserver/). I am currently having an issue displaying the download progress of the game files, so it may appear as if the panel has frozen. I am working on fixing this, please let me know if have any issues installing the egg because of this.
+The installer will automatically download and install the Master Server Patch necessary for listing your game on the community server list. You can find the project page [here](https://github.com/sergeii/swat-patches/tree/master/swat4stats-masterserver/). I am currently having an issue displaying the download progress of the game files, so it may appear as if the panel has frozen, give it a bit of time and you should see it begin unarchiving the files once it has finished downloading. I am working on fixing this, please let me know if have any issues installing the egg because of this.
 
 ## Server Ports
 SWAT 4 requires Base Port + 3 (Default port is 10480, so 10480-10483/udp)
