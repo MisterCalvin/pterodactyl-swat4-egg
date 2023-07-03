@@ -21,6 +21,8 @@ SWAT requires Base Port + 3 (Default port is 10480, so 10480-10483/udp)
 ## Notes / Bugs
 - The panel console will not send any input to the server. If you need to send any commands I recommend setting the Admin Password and sending them in-game. The panel will also sporadically update as I have no good way to capture SWAT 4's stdout or stderr. Currently I have the startup script tail the contents of the Dedicated Server .log, which is the only way I can get anything in to the panel. Swat 4 updates its log file in large chunks, usually whenever new information is written (player connecting, server changing level, responding to master server queries, etc.) so you will see large jumps in panel. I cannot do anything about this right now.
 
+- You can switch between SWAT 4 or The Stetchkov Syndicate through the startup panel. Be careful not to have an unsupported map loaded when doing so (TSS can play all of SWAT 4's maps, however SWAT 4 cannot access maps in the expansion and will refuse to boot)
+
 - Mods should work but have not been tested and will require modifying ``startup.sh`` in the root directory of the container. 
 
 - Keep an eye on your Dedicated Server log (/Content/System/Swat4DedicatedServer.log or /Content/System/Swat4XDedicatedServer.log for TSS) as it may grow in size overtime. This file is overwritten with fresh data each time the server is restarted.
