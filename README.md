@@ -1,5 +1,5 @@
 # Pterodactyl SWAT 4 Egg
-This is a Pterodactyl egg running SWAT 4 Gold or GOG under Wine. The installer assumes you have either of these versions and may fail if you try to provide it any other versions. During the egg deployment, you will be asked to link a URL of the game files. Currently, the supported filetypes are: ``.zip``, ``.gzip``, and ``.tar.xz``. You must have the files in the root directory of your archive or the installer will fail. The installer expects the archive layout to be as such:
+This is a Pterodactyl egg for SWAT 4 Gold Edition, or GOG, running under Wine. The installer assumes you have either of these versions and may fail if you try to provide it any other versions. During the egg deployment, you will be asked to link a URL of the game files. Currently, the supported filetypes are: ``.zip``, ``.gzip``, and ``.tar.xz``. You must have the files in the root directory of your archive or the installer will fail. The installer expects the archive layout to be as such:
 
     .
     ├── ...
@@ -30,3 +30,5 @@ SWAT requires Base Port + 3 (Default port is 10480, so 10480-10483/udp)
 - Keep an eye on your Dedicated Server log (/Content/System/Swat4DedicatedServer.log or /Content/System/Swat4XDedicatedServer.log for TSS) as it may grow in size overtime. This file is overwritten with fresh data each time the server is restarted.
 
 - I have tested this as thoroughly as possible, however SWAT 4 has many bugs in its dedicated server software so I am sure there are some things I have not caught. If encounter any problems feel free to [create a new issue](https://github.com/MisterCalvin/pterodactyl-swat4-egg/issues).
+
+- Tested with Pterodactyl Panel Version ``1.11.13`` and Wings Version ``1.11.6``
