@@ -1,5 +1,5 @@
 # Pterodactyl SWAT 4 Egg
-This is a Pterodactyl egg for SWAT 4 Gold Edition, or GOG, running under Wine. The installer assumes you have either of these versions and may fail if you try to provide it any other versions. During the egg deployment, you will be asked to link a URL of the game files. Currently, the supported filetypes are: ``.zip``, ``.gzip``, and ``.tar.xz``. You must have the files in the root directory of your archive or the installer will fail. The installer expects the archive layout to be as such:
+This is a Pterodactyl egg for SWAT 4 Gold Edition, or the GOG version, running under Wine. The installer assumes you have either of these versions and may fail if you try to provide it any other versions. During the egg deployment, you will be asked to link a URL of the game files. Currently, the supported filetypes are: ``.zip``, ``.gzip``, and ``.tar.xz``. You must have the files in the root directory of your archive or the installer will fail. The installer expects the archive layout to be as such:
 
     .
     ├── ...
