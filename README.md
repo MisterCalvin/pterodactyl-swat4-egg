@@ -6,7 +6,7 @@ This is a Pterodactyl egg for SWAT 4 Gold Edition, or the GOG version, running u
     ├── Content
     └── ContentExpansion
 
-The installer will automatically download and install the Master Server Patch necessary for listing your game on the community server list. You can find the project page [here](https://github.com/sergeii/swat-patches/tree/master/swat4stats-masterserver/).
+The installer will automatically download and install the Master Server Patch necessary for listing your game on the community server list. You can find the project page [here](https://github.com/sergeii/swat-patches/tree/master/swat4stats-masterserver/). I am currently having an issue displaying the download progress of the game files, so it may appear as if the panel has frozen. I am working on fixing this, please let me know if have any issues installing the egg because of this.
 
 ## Server Ports
 SWAT requires Base Port + 3 (Default port is 10480, so 10480-10483/udp)
