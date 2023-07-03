@@ -19,7 +19,7 @@ SWAT 4 requires Base Port + 3 (Default port is 10480, so 10480-10483/udp)
 |       	| 10483/udp|
 
 ## Notes / Bugs
-- The panel console will not send any input to the server. If you need to send any commands I recommend setting the Admin Password and sending them in-game. The panel will also sporadically update as I have no good way to capture SWAT 4's stdout or stderr. Currently I have the startup script tail the contents of the Dedicated Server .log, which is the only way I can get anything in to the panel. Swat 4 updates its log file in large chunks, usually whenever new information is written (player connecting, server changing level, responding to master server queries, etc.) so you will see large jumps in panel. I cannot do anything about this right now.
+- The panel console will not send any input to the server. If you need to send any commands I recommend setting the Admin Password and sending them in-game. The panel will also sporadically update as I have no good way to capture SWAT 4's stdout or stderr. Currently I have the startup script tail the contents of the Dedicated Server .log, which is the only way I can get anything in to the panel. SWAT 4 updates its log file in large chunks, usually whenever new information is written (player connecting, server changing level, responding to master server queries, etc.) so you will see large jumps in panel. I cannot do anything about this right now.
 
 - The startup script is run each time the server is restarted through the panel. Be careful when editing your SwatGUIState.ini or Swat4(X)DedicatedServer.ini files in /System as sed may overwrite any changes or outright break the config file.
 
