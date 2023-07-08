@@ -41,7 +41,7 @@ SWAT 4 requires Base Port + 3 (Default port is 10480, so 10480-10483/udp)
 | Canadian Forces: Direct Action | [4.1](https://www.moddb.com/downloads/canadian-forces-direct-action-41)					|
 | 11-99 Enhancement 	| [1.3](https://www.moddb.com/mods/11-99-enhancement-mod/downloads/11-99-enhancement-mod-v13)		|
 
-- Keep an eye on your Dedicated Server log (`/Content/System/Swat4DedicatedServer.log` or `/Content/System/Swat4XDedicatedServer.log` for TSS) as it may grow in size overtime. This file is backed up to `Swat4(X)DedicatedServer.old.log` recreated each time the server is restarted.
+- Keep an eye on your Dedicated Server log (`/Content/System/Swat4DedicatedServer.log` or `/Content/System/Swat4XDedicatedServer.log` for TSS) as it may grow in size overtime. This file is backed up to `Swat4(X)DedicatedServer.old.log` and a new file is created each time the server is restarted (there will only be a max of two log files at a time).
 
 - I have tested this as thoroughly as possible, however SWAT 4 has many bugs in its dedicated server software so I am sure there are some things I have not caught. If encounter any problems feel free to [create a new issue](https://github.com/MisterCalvin/pterodactyl-swat4-egg/issues).
 
