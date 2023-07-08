@@ -4,7 +4,7 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2023-07-02T23:19:38-04:00",
+    "exported_at": "2023-07-08T13:41:41-04:00",
     "name": "SWAT 4",
     "author": "admin@sbotnas.io",
     "description": "SWAT 4 is a tactical shooter video game where you lead an elite squad of police tactical experts and are tasked to bring order to a series of highly volatile scenarios involving hostages, civilians, suspects and other law enforcement officers. The rules of engagement are strict.",
@@ -40,12 +40,22 @@
         },
         {
             "name": "Game Version",
-            "description": "Choose between SWAT 4 or its expansion, The Stetchkov Syndicate",
+            "description": "Choose between SWAT 4, The Stetchkov Syndicate, or a third-party mod",
             "env_variable": "CONTENT_VERSION",
             "default_value": "SWAT 4",
             "user_viewable": true,
             "user_editable": true,
-            "rules": "required|string|in:SWAT 4,The Stetchkov Syndicate",
+            "rules": "required|string|in:SWAT 4,The Stetchkov Syndicate,Mod",
+            "field_type": "text"
+        },
+        {
+            "name": "Mod Name",
+            "description": "The folder name of the mod you want to run (case-sensitive). You must also set \"Game Version\" to \"Mod\" for this to be enabled.",
+            "env_variable": "MOD_NAME",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "nullable|string|max:32",
             "field_type": "text"
         },
         {
@@ -92,10 +102,10 @@
             "name": "Max Players",
             "description": "Maximum amount of players for the server",
             "env_variable": "MAX_PLAYERS",
-            "default_value": "10",
+            "default_value": "16",
             "user_viewable": true,
             "user_editable": true,
-            "rules": "required|integer|gt:0|max:10",
+            "rules": "required|integer|gt:0|max:16",
             "field_type": "text"
         },
         {
@@ -162,7 +172,7 @@
             "name": "WINEDEBUG",
             "description": "",
             "env_variable": "WINEDEBUG",
-            "default_value": "-all",
+            "default_value": "+warn+error",
             "user_viewable": false,
             "user_editable": false,
             "rules": "required|string|max:20",
