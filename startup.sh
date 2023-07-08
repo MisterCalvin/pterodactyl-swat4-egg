@@ -43,7 +43,7 @@ esac
 SwatGUIState=$(find "$GAMEDIR/$CONTENT_PATH/System" -type f -iname SwatGUIState.ini -printf "%f" -quit | grep .) && SwatGUIState="$GAMEDIR/$CONTENT_PATH/System/$SwatGUIState" 
 
 if [ "$SwatGUIState" = "" ]; then
-        echo "Cannot find $GAMEDIR/$CONTENT_VERSION/System/SwatGUIState.ini, check that it exists in $GAMEDIR/$CONTENT_PATH/System/!"
+        echo "Cannot find $GAMEDIR/$CONTENT_VERSION/System/SwatGUIState.ini, check that it exists!"
         exit 1
 fi
 
