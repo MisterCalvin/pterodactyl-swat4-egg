@@ -81,6 +81,9 @@ else
         sed -i 's/^bPassworded=.*$/bPassworded=False/g' "$SwatGUIState"
 fi
 
+# Update Swat4(X)DedicatedServer.ini with current game port
+sed -i -e "s/^Port=.*$/Port=$SERVER_PORT/g" "$GAMEDIR/$CONTENT_PATH/System/$SERVER_BINARY.ini"
+
 # Hacky map fix for SWAT 4 + Base SWAT 4 mods
 if [ "$CONTENT_VERSION" = "SWAT4" ] || [ "$MOD_GAME_VERSION" = "Swat4.ini" ]; then
 	sed -i -e "s/^MapIndex=.*$/MapIndex=0/g;
